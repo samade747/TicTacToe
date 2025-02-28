@@ -27,23 +27,23 @@ def is_full(board):
 # Main function to run the Tic-Tac-Toe game
 def tic_tac_toe():
     # Set up Streamlit page configuration
-    st.set_page_config(page_title="Tic-Tac-Toe by samad", layout="centered", page_icon="🎮")
-    st.title("Tic-Tac-Toe Game by samad")
+    st.set_page_config(page_title="Tic-Tac-Toe", layout="centered", page_icon="🎮")
+    st.title("Tic-Tac-Toe Game")
     # Display a styled header
     st.markdown("<h2 style='text-align: center; color: #FFFFFF; background-color: #4CAF50; padding: 10px;'>Enjoy Your Game!</h2>", unsafe_allow_html=True)
     
     # Initialize game state variables in Streamlit session state
-    if 'board' not in st.session_state:
+    if 'board' not in st.session_state or 'reset' in st.session_state:
         st.session_state.board = initialize_board()
         st.session_state.current_player = 'X'
         st.session_state.players = {'X': 'Player 1', 'O': 'Player 2'}
         st.session_state.winner = None
+        st.session_state.reset = False  # Reset flag to prevent persistent marks
     
     # Get player names from user input
-    if 'player1' not in st.session_state:
-        st.session_state.player1 = st.text_input("Enter Player 1 Name:", "Player 1")
-        st.session_state.player2 = st.text_input("Enter Player 2 Name:", "Player 2")
-        st.session_state.players = {'X': st.session_state.player1, 'O': st.session_state.player2}
+    st.session_state.player1 = st.text_input("Enter Player 1 Name:", "Player 1")
+    st.session_state.player2 = st.text_input("Enter Player 2 Name:", "Player 2")
+    st.session_state.players = {'X': st.session_state.player1, 'O': st.session_state.player2}
     
     # Display the current player's turn
     st.write(f"**{st.session_state.players[st.session_state.current_player]}'s turn ({st.session_state.current_player})**")
@@ -60,10 +60,10 @@ def tic_tac_toe():
                     # Check if the current player has won
                     if check_winner(st.session_state.board, st.session_state.current_player):
                         st.session_state.winner = st.session_state.current_player
-                        st.success(f"{st.session_state.players[st.session_state.winner]} wins! Game Restarting...")
+                        st.success(f"{st.session_state.players[st.session_state.winner]} wins!")
                     # Check if the game is a draw
                     elif is_full(st.session_state.board):
-                        st.warning("It's a draw! Game Restarting...")
+                        st.warning("It's a draw!")
                     else:
                         # Switch to the other player for the next turn
                         st.session_state.current_player = 'O' if st.session_state.current_player == 'X' else 'X'
@@ -75,6 +75,8 @@ def tic_tac_toe():
             st.session_state.board = initialize_board()
             st.session_state.current_player = 'X'
             st.session_state.winner = None
+            st.session_state.reset = True  # Ensure board is fully cleared
+            st.rerun()  # Rerun the script to refresh the UI
 
 # Run the Tic-Tac-Toe game
 tic_tac_toe()
