@@ -57,7 +57,7 @@ def tic_tac_toe():
     st.session_state.players = {'X': st.session_state.player1, 'O': st.session_state.player2}
     
     # Display the current player's turn
-    st.markdown(f"<h3 style='text-align: center; color: black;'>🎲 {st.session_state.players[st.session_state.current_player]}'s Turn ({st.session_state.current_player})</h3>", unsafe_allow_html=True)
+    st.markdown(f"<h3 style='text-align: center; color: red;'>🎲 {st.session_state.players[st.session_state.current_player]}'s Turn ({st.session_state.current_player})</h3>", unsafe_allow_html=True)
     
     # Create a 3x3 button grid for the game board with improved UI
     board_container = st.container()
