@@ -1,4 +1,3 @@
-
 import streamlit as st
 import numpy as np
 
@@ -122,7 +121,6 @@ def tic_tac_toe():
                             st.warning("🤝 It's a draw!")
                         else:
                             st.session_state.current_player = 'O' if st.session_state.current_player == 'X' else 'X'
-                        st.experimental_rerun()
     
     # Restart game button when game over
     if st.session_state.winner or is_full(st.session_state.board):
@@ -131,12 +129,9 @@ def tic_tac_toe():
             st.session_state.current_player = 'X'
             st.session_state.winner = None
             st.session_state.reset = True
-            st.experimental_rerun()
 
 # Run the Tic-Tac-Toe game
 tic_tac_toe()
-
-
 
 
 # import streamlit as st
